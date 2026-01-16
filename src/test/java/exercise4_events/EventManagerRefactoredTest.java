@@ -2,8 +2,8 @@ package exercise4_events;
 
 // import exercise4_events.refactored.*;
 // import exercise4_events.refactored.EventManager;
-// import exercise4_events.refactored.event.*;
-// import exercise4_events.refactored.listener.*;
+ import exercise4_events.refactored.event.*;
+ import exercise4_events.refactored.listener.*;
 // import exercise4_events.refactored.publisher.*;
 // import exercise4_events.refactored.model.AuditLogEntry;
 // import exercise4_events.refactored.publisher.EventPublisher;
@@ -30,150 +30,150 @@ public class EventManagerRefactoredTest {
     // PARTE 1: Tests para Event Classes (Modelo de Eventos)
     // ═══════════════════════════════════════════════════════════════════════════
     
-    // @Nested
-    // @DisplayName("4.1 - Event Classes")
-    // class EventClassesTests {
+     @Nested
+     @DisplayName("4.1 - Event Classes")
+     class EventClassesTests {
 
-    //     @Test
-    //     @DisplayName("Event debe tener timestamp y tipo")
-    //     void eventShouldHaveTimestampAndType() {
-    //         Event event = new UserRegisteredEvent("user@test.com", "John Doe");
+         @Test
+         @DisplayName("Event debe tener timestamp y tipo")
+         void eventShouldHaveTimestampAndType() {
+             Event event = new UserRegisteredEvent("user@test.com", "John Doe");
 
-    //         assertThat(event.getTimestamp()).isNotNull();
-    //         assertThat(event.getTimestamp()).isBeforeOrEqualTo(LocalDateTime.now());
-    //         assertThat(event.getEventType()).isEqualTo("USER_REGISTERED");
-    //     }
+             assertThat(event.getTimestamp()).isNotNull();
+             assertThat(event.getTimestamp()).isBeforeOrEqualTo(LocalDateTime.now());
+             assertThat(event.getEventType()).isEqualTo("USER_REGISTERED");
+         }
 
-    //     @Test
-    //     @DisplayName("OrderPlacedEvent debe contener orderId, customerEmail y amount")
-    //     void orderPlacedEventShouldContainOrderDetails() {
-    //         OrderPlacedEvent event = new OrderPlacedEvent(
-    //                 "ORD-123", "customer@test.com", "+1234567890", 299.99);
+         @Test
+         @DisplayName("OrderPlacedEvent debe contener orderId, customerEmail y amount")
+         void orderPlacedEventShouldContainOrderDetails() {
+             OrderPlacedEvent event = new OrderPlacedEvent(
+                     "ORD-123", "customer@test.com", "+1234567890", 299.99);
 
-    //         assertThat(event.getEventType()).isEqualTo("ORDER_PLACED");
-    //     }
+             assertThat(event.getEventType()).isEqualTo("ORDER_PLACED");
+         }
 
-    //     @Test
-    //     @DisplayName("PaymentReceivedEvent debe contener paymentId y amount")
-    //     void paymentReceivedEventShouldContainPaymentDetails() {
-    //         PaymentReceivedEvent event = new PaymentReceivedEvent(
-    //                 "PAY-456", "ORD-123", 299.99, "customer@test.com");
+         @Test
+         @DisplayName("PaymentReceivedEvent debe contener paymentId y amount")
+         void paymentReceivedEventShouldContainPaymentDetails() {
+             PaymentReceivedEvent event = new PaymentReceivedEvent(
+                     "PAY-456", "ORD-123", 299.99, "customer@test.com");
 
-    //         assertThat(event.getEventType()).isEqualTo("PAYMENT_RECEIVED");
-    //     }
+             assertThat(event.getEventType()).isEqualTo("PAYMENT_RECEIVED");
+         }
 
-    //     @Test
-    //     @DisplayName("SystemAlertEvent debe contener level, message y component")
-    //     void systemAlertEventShouldContainAlertDetails() {
-    //         SystemAlertEvent event = new SystemAlertEvent(
-    //                 AlertLevel.CRITICAL, "Database connection failed", "DatabaseService");
+         @Test
+         @DisplayName("SystemAlertEvent debe contener level, message y component")
+         void systemAlertEventShouldContainAlertDetails() {
+             SystemAlertEvent event = new SystemAlertEvent(
+                     AlertLevel.CRITICAL, "Database connection failed", "DatabaseService");
 
-    //         assertThat(event.getEventType()).isEqualTo("SYSTEM_ALERT");
-    //     }
+             assertThat(event.getEventType()).isEqualTo("SYSTEM_ALERT");
+         }
 
-    //     @Test
-    //     @DisplayName("AlertLevel enum debe tener INFO, WARNING y CRITICAL")
-    //     void alertLevelShouldHaveCorrectValues() {
-    //         assertThat(AlertLevel.values())
-    //                 .containsExactlyInAnyOrder(
-    //                         AlertLevel.INFO,
-    //                         AlertLevel.WARNING,
-    //                         AlertLevel.CRITICAL);
-    //     }
-    // }
+         @Test
+         @DisplayName("AlertLevel enum debe tener INFO, WARNING y CRITICAL")
+         void alertLevelShouldHaveCorrectValues() {
+             assertThat(AlertLevel.values())
+                     .containsExactlyInAnyOrder(
+                             AlertLevel.INFO,
+                             AlertLevel.WARNING,
+                             AlertLevel.CRITICAL);
+         }
+     }
 
     // // ═══════════════════════════════════════════════════════════════════════════
     // // PARTE 2: Tests para EventListener Interface (Observer)
     // // ═══════════════════════════════════════════════════════════════════════════
 
-    // @Nested
-    // @DisplayName("4.2 - EventListener Interface (Observer)")
-    // class EventListenerInterfaceTests {
+     @Nested
+     @DisplayName("4.2 - EventListener Interface (Observer)")
+     class EventListenerInterfaceTests {
 
-    //     @Test
-    //     @DisplayName("Todos los listeners deben implementar EventListener")
-    //     void allListenersShouldImplementInterface() {
-    //         assertThat(new EmailNotificationListener()).isInstanceOf(EventListener.class);
-    //         assertThat(new SmsNotificationListener()).isInstanceOf(EventListener.class);
-    //         assertThat(new SlackNotificationListener()).isInstanceOf(EventListener.class);
-    //         assertThat(new DashboardUpdateListener()).isInstanceOf(EventListener.class);
-    //         assertThat(new AuditLogListener()).isInstanceOf(EventListener.class);
-    //     }
+         @Test
+         @DisplayName("Todos los listeners deben implementar EventListener")
+         void allListenersShouldImplementInterface() {
+             assertThat(new EmailNotificationListener()).isInstanceOf(EventListener.class);
+             assertThat(new SmsNotificationListener()).isInstanceOf(EventListener.class);
+             assertThat(new SlackNotificationListener()).isInstanceOf(EventListener.class);
+             assertThat(new DashboardUpdateListener()).isInstanceOf(EventListener.class);
+             assertThat(new AuditLogListener()).isInstanceOf(EventListener.class);
+         }
 
-    //     @Test
-    //     @DisplayName("EventListener debe tener método onEvent()")
-    //     void eventListenerShouldHaveOnEventMethod() {
-    //         EventListener listener = new EmailNotificationListener();
-    //         Event event = new UserRegisteredEvent("test@test.com", "Test");
+         @Test
+         @DisplayName("EventListener debe tener método onEvent()")
+         void eventListenerShouldHaveOnEventMethod() {
+             EventListener listener = new EmailNotificationListener();
+             Event event = new UserRegisteredEvent("test@test.com", "Test");
 
-    //         // No debe lanzar excepción
-    //         assertThatCode(() -> listener.onEvent(event)).doesNotThrowAnyException();
-    //     }
+             // No debe lanzar excepción
+             assertThatCode(() -> listener.onEvent(event)).doesNotThrowAnyException();
+         }
 
-    //     @Test
-    //     @DisplayName("EventListener puede filtrar eventos con supports()")
-    //     void eventListenerCanFilterEventsWithSupports() {
-    //         EventListener listener = new EmailNotificationListener();
+         @Test
+         @DisplayName("EventListener puede filtrar eventos con supports()")
+         void eventListenerCanFilterEventsWithSupports() {
+             EventListener listener = new EmailNotificationListener();
 
-    //         // Debe soportar UserRegisteredEvent
-    //         assertThat(listener.supports(UserRegisteredEvent.class)).isTrue();
-    //         // Puede no soportar otros
-    //         // La implementación decide qué eventos soporta
-    //     }
-    // }
+             // Debe soportar UserRegisteredEvent
+             assertThat(listener.supports(UserRegisteredEvent.class)).isTrue();
+             // Puede no soportar otros
+             // La implementación decide qué eventos soporta
+         }
+     }
 
     // // ═══════════════════════════════════════════════════════════════════════════
     // // PARTE 3: Tests para EmailNotificationListener
     // // ═══════════════════════════════════════════════════════════════════════════
 
-    // @Nested
-    // @DisplayName("4.3 - EmailNotificationListener")
-    // class EmailNotificationListenerTests {
+     @Nested
+     @DisplayName("4.3 - EmailNotificationListener")
+     class EmailNotificationListenerTests {
 
-    //     private EmailNotificationListener emailListener;
+         private EmailNotificationListener emailListener;
 
-    //     @BeforeEach
-    //     void setUp() {
-    //         emailListener = new EmailNotificationListener();
-    //     }
+         @BeforeEach
+         void setUp() {
+             emailListener = new EmailNotificationListener();
+         }
 
-    //     @Test
-    //     @DisplayName("Debe manejar UserRegisteredEvent")
-    //     void shouldHandleUserRegisteredEvent() {
-    //         UserRegisteredEvent event = new UserRegisteredEvent("user@test.com", "John");
+         @Test
+         @DisplayName("Debe manejar UserRegisteredEvent")
+         void shouldHandleUserRegisteredEvent() {
+             UserRegisteredEvent event = new UserRegisteredEvent("user@test.com", "John");
 
-    //         assertThatCode(() -> emailListener.onEvent(event))
-    //                 .doesNotThrowAnyException();
-    //     }
+             assertThatCode(() -> emailListener.onEvent(event))
+                     .doesNotThrowAnyException();
+         }
 
-    //     @Test
-    //     @DisplayName("Debe manejar OrderPlacedEvent")
-    //     void shouldHandleOrderPlacedEvent() {
-    //         OrderPlacedEvent event = new OrderPlacedEvent(
-    //                 "ORD-1", "user@test.com", null, 100.0);
+         @Test
+         @DisplayName("Debe manejar OrderPlacedEvent")
+         void shouldHandleOrderPlacedEvent() {
+             OrderPlacedEvent event = new OrderPlacedEvent(
+                     "ORD-1", "user@test.com", null, 100.0);
 
-    //         assertThatCode(() -> emailListener.onEvent(event))
-    //                 .doesNotThrowAnyException();
-    //     }
+             assertThatCode(() -> emailListener.onEvent(event))
+                     .doesNotThrowAnyException();
+         }
 
-    //     @Test
-    //     @DisplayName("Debe manejar PaymentReceivedEvent")
-    //     void shouldHandlePaymentReceivedEvent() {
-    //         PaymentReceivedEvent event = new PaymentReceivedEvent(
-    //                 "PAY-1", "ORD-1", 100.0, "user@test.com");
+         @Test
+         @DisplayName("Debe manejar PaymentReceivedEvent")
+         void shouldHandlePaymentReceivedEvent() {
+             PaymentReceivedEvent event = new PaymentReceivedEvent(
+                     "PAY-1", "ORD-1", 100.0, "user@test.com");
 
-    //         assertThatCode(() -> emailListener.onEvent(event))
-    //                 .doesNotThrowAnyException();
-    //     }
+             assertThatCode(() -> emailListener.onEvent(event))
+                     .doesNotThrowAnyException();
+         }
 
-    //     @Test
-    //     @DisplayName("Debe soportar eventos que requieren email")
-    //     void shouldSupportEmailRelatedEvents() {
-    //         assertThat(emailListener.supports(UserRegisteredEvent.class)).isTrue();
-    //         assertThat(emailListener.supports(OrderPlacedEvent.class)).isTrue();
-    //         assertThat(emailListener.supports(PaymentReceivedEvent.class)).isTrue();
-    //     }
-    // }
+         @Test
+         @DisplayName("Debe soportar eventos que requieren email")
+         void shouldSupportEmailRelatedEvents() {
+             assertThat(emailListener.supports(UserRegisteredEvent.class)).isTrue();
+             assertThat(emailListener.supports(OrderPlacedEvent.class)).isTrue();
+             assertThat(emailListener.supports(PaymentReceivedEvent.class)).isTrue();
+         }
+     }
 
     // // ═══════════════════════════════════════════════════════════════════════════
     // // PARTE 4: Tests para SmsNotificationListener

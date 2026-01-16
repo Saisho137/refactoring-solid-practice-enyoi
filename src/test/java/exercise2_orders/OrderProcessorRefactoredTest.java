@@ -4,8 +4,8 @@ package exercise2_orders;
  import exercise2_orders.refactored.discount.*;
  import exercise2_orders.refactored.repository.*;
  import exercise2_orders.refactored.validator.*;
-// import exercise2_orders.refactored.tax.*;
-// import exercise2_orders.refactored.*;
+ import exercise2_orders.refactored.tax.*;
+ import exercise2_orders.refactored.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
@@ -336,194 +336,194 @@ public class OrderProcessorRefactoredTest {
     ////// PARTE 6: Tests para TaxCalculator (SRP)
     ////// ═══════════════════════════════════════════════════════════════════════════
 
-    //@Nested
-    //@DisplayName("2.6 - TaxCalculator (Single Responsibility)")
-    //class TaxCalculatorTests {
+    @Nested
+    @DisplayName("2.6 - TaxCalculator (Single Responsibility)")
+    class TaxCalculatorTests {
 
-    //    @Test
-    //    @DisplayName("Debe calcular impuesto del 19%")
-    //    void shouldCalculate19PercentTax() {
-    //        TaxCalculator calculator = new TaxCalculator(new BigDecimal("0.19"));
-    //        BigDecimal amount = new BigDecimal("100");
+        @Test
+        @DisplayName("Debe calcular impuesto del 19%")
+        void shouldCalculate19PercentTax() {
+            TaxCalculator calculator = new TaxCalculator(new BigDecimal("0.19"));
+            BigDecimal amount = new BigDecimal("100");
 
-    //        BigDecimal tax = calculator.calculate(amount);
+            BigDecimal tax = calculator.calculate(amount);
 
-    //        assertThat(tax).isEqualByComparingTo(new BigDecimal("19"));
-    //    }
+            assertThat(tax).isEqualByComparingTo(new BigDecimal("19"));
+        }
 
-    //    @Test
-    //    @DisplayName("Debe retornar cero para monto cero")
-    //    void shouldReturnZeroForZeroAmount() {
-    //        TaxCalculator calculator = new TaxCalculator(new BigDecimal("0.19"));
+        @Test
+        @DisplayName("Debe retornar cero para monto cero")
+        void shouldReturnZeroForZeroAmount() {
+            TaxCalculator calculator = new TaxCalculator(new BigDecimal("0.19"));
 
-    //        BigDecimal tax = calculator.calculate(BigDecimal.ZERO);
+            BigDecimal tax = calculator.calculate(BigDecimal.ZERO);
 
-    //        assertThat(tax).isEqualByComparingTo(BigDecimal.ZERO);
-    //    }
+            assertThat(tax).isEqualByComparingTo(BigDecimal.ZERO);
+        }
 
-    //    @Test
-    //    @DisplayName("Debe exponer la tasa de impuesto")
-    //    void shouldExposeRate() {
-    //        TaxCalculator calculator = new TaxCalculator(new BigDecimal("0.19"));
+        @Test
+        @DisplayName("Debe exponer la tasa de impuesto")
+        void shouldExposeRate() {
+            TaxCalculator calculator = new TaxCalculator(new BigDecimal("0.19"));
 
-    //        assertThat(calculator.getRate()).isEqualByComparingTo(new BigDecimal("0.19"));
-    //    }
-    //}
+            assertThat(calculator.getRate()).isEqualByComparingTo(new BigDecimal("0.19"));
+        }
+    }
 
     ////// ═══════════════════════════════════════════════════════════════════════════
     ////// PARTE 7: Tests para ShippingCalculator (SRP + Strategy opcional)
     ////// ═══════════════════════════════════════════════════════════════════════════
     ////
-    //@Nested
-    //@DisplayName("2.7 - ShippingCalculator")
-    //class ShippingCalculatorTests {
+    @Nested
+    @DisplayName("2.7 - ShippingCalculator")
+    class ShippingCalculatorTests {
 
-    //    private ShippingCalculator calculator;
+        private ShippingCalculator calculator;
 
-    //    @BeforeEach
-    //    void setUp() {
-    //        calculator = new ShippingCalculator();
-    //    }
+        @BeforeEach
+        void setUp() {
+            calculator = new ShippingCalculator();
+        }
 
-    //    @Test
-    //    @DisplayName("VIP siempre tiene envío gratis")
-    //    void vipShouldAlwaysHaveFreeShipping() {
-    //        BigDecimal cost = calculator.calculate(CustomerType.VIP, new BigDecimal("50"));
+        @Test
+        @DisplayName("VIP siempre tiene envío gratis")
+        void vipShouldAlwaysHaveFreeShipping() {
+            BigDecimal cost = calculator.calculate(CustomerType.VIP, new BigDecimal("50"));
 
-    //        assertThat(cost).isEqualByComparingTo(BigDecimal.ZERO);
-    //    }
+            assertThat(cost).isEqualByComparingTo(BigDecimal.ZERO);
+        }
 
-    //    @Test
-    //    @DisplayName("Premium tiene envío gratis si compra > $100")
-    //    void premiumShouldHaveFreeShippingOver100() {
-    //        assertThat(calculator.calculate(CustomerType.PREMIUM, new BigDecimal("150")))
-    //                .isEqualByComparingTo(BigDecimal.ZERO);
-    //        assertThat(calculator.calculate(CustomerType.PREMIUM, new BigDecimal("50")))
-    //                .isGreaterThan(BigDecimal.ZERO);
-    //    }
+        @Test
+        @DisplayName("Premium tiene envío gratis si compra > $100")
+        void premiumShouldHaveFreeShippingOver100() {
+            assertThat(calculator.calculate(CustomerType.PREMIUM, new BigDecimal("150")))
+                    .isEqualByComparingTo(BigDecimal.ZERO);
+            assertThat(calculator.calculate(CustomerType.PREMIUM, new BigDecimal("50")))
+                    .isGreaterThan(BigDecimal.ZERO);
+        }
 
-    //    @Test
-    //    @DisplayName("Compras > $200 tienen envío gratis")
-    //    void ordersOver200ShouldHaveFreeShipping() {
-    //        BigDecimal cost = calculator.calculate(CustomerType.REGULAR, new BigDecimal("250"));
+        @Test
+        @DisplayName("Compras > $200 tienen envío gratis")
+        void ordersOver200ShouldHaveFreeShipping() {
+            BigDecimal cost = calculator.calculate(CustomerType.REGULAR, new BigDecimal("250"));
 
-    //        assertThat(cost).isEqualByComparingTo(BigDecimal.ZERO);
-    //    }
+            assertThat(cost).isEqualByComparingTo(BigDecimal.ZERO);
+        }
 
-    //    @Test
-    //    @DisplayName("Envío estándar cuesta $9.99")
-    //    void standardShippingShouldCost999() {
-    //        BigDecimal cost = calculator.calculate(CustomerType.REGULAR, new BigDecimal("50"));
+        @Test
+        @DisplayName("Envío estándar cuesta $9.99")
+        void standardShippingShouldCost999() {
+            BigDecimal cost = calculator.calculate(CustomerType.REGULAR, new BigDecimal("50"));
 
-    //        assertThat(cost).isEqualByComparingTo(new BigDecimal("9.99"));
-    //    }
-    //}
+            assertThat(cost).isEqualByComparingTo(new BigDecimal("9.99"));
+        }
+    }
 
     ////// ═══════════════════════════════════════════════════════════════════════════
     ////// PARTE 8: Tests para OrderService Refactorizado (Orquestador con DIP)
     ////// ═══════════════════════════════════════════════════════════════════════════
 
-    //@Nested
-    //@DisplayName("2.8 - OrderService Refactorizado (DIP)")
-    //class OrderServiceTests {
+    @Nested
+    @DisplayName("2.8 - OrderService Refactorizado (DIP)")
+    class OrderServiceTests {
 
-    //    @Mock
-    //    private OrderRepository mockRepository;
+        @Mock
+        private OrderRepository mockRepository;
 
-    //    @Mock
-    //    private DiscountStrategyFactory mockDiscountFactory;
+        @Mock
+        private DiscountStrategyFactory mockDiscountFactory;
 
-    //    @Mock
-    //    private DiscountStrategy mockDiscountStrategy;
+        @Mock
+        private DiscountStrategy mockDiscountStrategy;
 
-    //    @Mock
-    //    private OrderValidator mockValidator;
+        @Mock
+        private OrderValidator mockValidator;
 
-    //    private OrderService orderService;
+        private OrderService orderService;
 
-    //    @BeforeEach
-    //    void setUp() {
-    //        TaxCalculator taxCalculator = new TaxCalculator(new BigDecimal("0.19"));
-    //        ShippingCalculator shippingCalculator = new ShippingCalculator();
+        @BeforeEach
+        void setUp() {
+            TaxCalculator taxCalculator = new TaxCalculator(new BigDecimal("0.19"));
+            ShippingCalculator shippingCalculator = new ShippingCalculator();
 
-    //        orderService = new OrderService(
-    //                mockRepository,
-    //                mockDiscountFactory,
-    //                mockValidator,
-    //                taxCalculator,
-    //                shippingCalculator
-    //        );
-    //    }
+            orderService = new OrderService(
+                    mockRepository,
+                    mockDiscountFactory,
+                    mockValidator,
+                    taxCalculator,
+                    shippingCalculator
+            );
+        }
 
-    //    @Test
-    //    @DisplayName("Debe validar items antes de procesar")
-    //    void shouldValidateItemsBeforeProcessing() {
-    //        // Arrange
-    //        List<OrderItem> items = List.of(new OrderItem("Test", new BigDecimal("100"), 1));
-    //        Customer customer = new Customer("C001", "John Doe", CustomerType.REGULAR);
-    //        when(mockValidator.validate(items))
-    //                .thenReturn(ValidationResult.invalid(List.of("Validation failed")));
+        @Test
+        @DisplayName("Debe validar items antes de procesar")
+        void shouldValidateItemsBeforeProcessing() {
+            // Arrange
+            List<OrderItem> items = List.of(new OrderItem("Test", new BigDecimal("100"), 1));
+            Customer customer = new Customer("C001", "John Doe", CustomerType.REGULAR);
+            when(mockValidator.validate(items))
+                    .thenReturn(ValidationResult.invalid(List.of("Validation failed")));
 
-    //        // Act & Assert
-    //        assertThatThrownBy(() -> orderService.processOrder(customer, items))
-    //                .isInstanceOf(Exception.class);
+            // Act & Assert
+            assertThatThrownBy(() -> orderService.processOrder(customer, items))
+                    .isInstanceOf(Exception.class);
 
-    //        verify(mockValidator).validate(items);
-    //        verify(mockRepository, never()).save(any());
-    //    }
+            verify(mockValidator).validate(items);
+            verify(mockRepository, never()).save(any());
+        }
 
-    //    @Test
-    //    @DisplayName("Debe usar la factory para obtener estrategia de descuento")
-    //    void shouldUseFactoryToGetDiscountStrategy() throws Exception {
-    //        // Arrange
-    //        List<OrderItem> items = List.of(new OrderItem("Test", new BigDecimal("100"), 1));
-    //        Customer customer = new Customer("C001", "John Doe", CustomerType.PREMIUM);
-    //        when(mockValidator.validate(items)).thenReturn(ValidationResult.valid());
-    //        when(mockDiscountFactory.createStrategy(CustomerType.PREMIUM))
-    //                .thenReturn(mockDiscountStrategy);
-    //        when(mockDiscountStrategy.calculateDiscount(any())).thenReturn(new BigDecimal("10"));
+        @Test
+        @DisplayName("Debe usar la factory para obtener estrategia de descuento")
+        void shouldUseFactoryToGetDiscountStrategy() throws Exception {
+            // Arrange
+            List<OrderItem> items = List.of(new OrderItem("Test", new BigDecimal("100"), 1));
+            Customer customer = new Customer("C001", "John Doe", CustomerType.PREMIUM);
+            when(mockValidator.validate(items)).thenReturn(ValidationResult.valid());
+            when(mockDiscountFactory.createStrategy(CustomerType.PREMIUM))
+                    .thenReturn(mockDiscountStrategy);
+            when(mockDiscountStrategy.calculateDiscount(any())).thenReturn(new BigDecimal("10"));
 
-    //        // Act
-    //        orderService.processOrder(customer, items);
+            // Act
+            orderService.processOrder(customer, items);
 
-    //        // Assert
-    //        verify(mockDiscountFactory).createStrategy(CustomerType.PREMIUM);
-    //    }
+            // Assert
+            verify(mockDiscountFactory).createStrategy(CustomerType.PREMIUM);
+        }
 
-    //    @Test
-    //    @DisplayName("Debe guardar la orden en el repositorio")
-    //    void shouldSaveOrderToRepository() throws Exception {
-    //        // Arrange
-    //        List<OrderItem> items = List.of(new OrderItem("Test", new BigDecimal("100"), 1));
-    //        Customer customer = new Customer("C001", "John Doe", CustomerType.REGULAR);
-    //        when(mockValidator.validate(items)).thenReturn(ValidationResult.valid());
-    //        when(mockDiscountFactory.createStrategy(any())).thenReturn(mockDiscountStrategy);
-    //        when(mockDiscountStrategy.calculateDiscount(any())).thenReturn(BigDecimal.ZERO);
+        @Test
+        @DisplayName("Debe guardar la orden en el repositorio")
+        void shouldSaveOrderToRepository() throws Exception {
+            // Arrange
+            List<OrderItem> items = List.of(new OrderItem("Test", new BigDecimal("100"), 1));
+            Customer customer = new Customer("C001", "John Doe", CustomerType.REGULAR);
+            when(mockValidator.validate(items)).thenReturn(ValidationResult.valid());
+            when(mockDiscountFactory.createStrategy(any())).thenReturn(mockDiscountStrategy);
+            when(mockDiscountStrategy.calculateDiscount(any())).thenReturn(BigDecimal.ZERO);
 
-    //        // Act
-    //        orderService.processOrder(customer, items);
+            // Act
+            orderService.processOrder(customer, items);
 
-    //        // Assert
-    //        verify(mockRepository).save(any(Order.class));
-    //    }
+            // Assert
+            verify(mockRepository).save(any(Order.class));
+        }
 
-    //    @Test
-    //    @DisplayName("Debe calcular el total correctamente")
-    //    void shouldCalculateTotalCorrectly() throws Exception {
-    //        // Arrange
-    //        List<OrderItem> items = List.of(new OrderItem("Product", new BigDecimal("100"), 1));
-    //        Customer customer = new Customer("C001", "John Doe", CustomerType.VIP);
+        @Test
+        @DisplayName("Debe calcular el total correctamente")
+        void shouldCalculateTotalCorrectly() throws Exception {
+            // Arrange
+            List<OrderItem> items = List.of(new OrderItem("Product", new BigDecimal("100"), 1));
+            Customer customer = new Customer("C001", "John Doe", CustomerType.VIP);
 
-    //        when(mockValidator.validate(items)).thenReturn(ValidationResult.valid());
-    //        when(mockDiscountFactory.createStrategy(CustomerType.VIP))
-    //                .thenReturn(new VipCustomerDiscount());
+            when(mockValidator.validate(items)).thenReturn(ValidationResult.valid());
+            when(mockDiscountFactory.createStrategy(CustomerType.VIP))
+                    .thenReturn(new VipCustomerDiscount());
 
-    //        // Act
-    //        Order order = orderService.processOrder(customer, items);
+            // Act
+            Order order = orderService.processOrder(customer, items);
 
-    //        // Assert - VIP: 100 - 20 (20% desc) = 80 + 15.20 (19% tax) + 0 (free ship) = 95.20
-    //        assertThat(order.getTotal()).isEqualByComparingTo(new BigDecimal("95.20"));
-    //    }
-    //}
+            // Assert - VIP: 100 - 20 (20% desc) = 80 + 15.20 (19% tax) + 0 (free ship) = 95.20
+            assertThat(order.getTotal()).isEqualByComparingTo(new BigDecimal("95.20"));
+        }
+    }
 
 }

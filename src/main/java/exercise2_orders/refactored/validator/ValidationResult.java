@@ -7,14 +7,20 @@ public class ValidationResult {
     private boolean valid;
     private final List<String> errors;
 
-    public ValidationResult() {
+    public ValidationResult(List<String> errors) {
         this.valid = true;
-        this.errors = new ArrayList<>();
+        this.errors = errors;
     }
 
-    public void failure(String error) {
-        this.errors.add(error);
-        this.valid = false;
+    public ValidationResult() {
+        this.valid = true;
+        this.errors = List.of();
+    }
+
+    public static ValidationResult invalid(List<String> error) {
+        ValidationResult result = new ValidationResult(error);
+        result.failure();
+        return  result;
     }
 
     public boolean isValid() {
@@ -25,4 +31,11 @@ public class ValidationResult {
         return new ArrayList<>(errors);
     }
 
+    private void failure() {
+        this.valid = false;
+    }
+
+    public static ValidationResult valid() {
+        return new ValidationResult();
+    }
 }

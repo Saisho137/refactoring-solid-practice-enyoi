@@ -8,6 +8,7 @@ public class Order {
     private final Customer customer;
     private final List<OrderItem> items;
     private OrderStatus status;
+    private BigDecimal total;
 
     public Order(String id, Customer customer, List<OrderItem> items) {
         this.id = id;
@@ -41,5 +42,13 @@ public class Order {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 }

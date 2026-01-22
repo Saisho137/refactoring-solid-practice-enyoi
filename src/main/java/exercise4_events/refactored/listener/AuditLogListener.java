@@ -1,16 +1,34 @@
 package exercise4_events.refactored.listener;
 
-import exercise4_events.refactored.event.Event;
+import exercise4_events.refactored.event.*;
+import exercise4_events.refactored.model.AuditLogEntry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AuditLogListener implements EventListener {
-    @Override
-    public void onEvent(Event event) {
-        // Lógica para enviar notificación por email basada en el evento
+    private final List<AuditLogEntry> logs;
+
+    public AuditLogListener() {
+        this.logs = new ArrayList<>();
     }
 
     @Override
-    public boolean supports(Class<? extends Event> eventClass) {
-        // Retorna true si este listener soporta el tipo de evento dado
-        return false;
+    public void onEvent(Event event) {
+        AuditLogEntry log = new AuditLogEntry(event.getTimestamp(), event.getEventType());
+        logs.add(log);
+        System.out.println("Event logged");
+    }
+
+    @Override
+    public boolean supports(Class<? extends Event> event) {
+        return (UserRegisteredEvent.class.isAssignableFrom(event) ||
+                OrderPlacedEvent.class.isAssignableFrom(event) ||
+                PaymentReceivedEvent.class.isAssignableFrom(event) ||
+                SystemAlertEvent.class.isAssignableFrom(event));
+    }
+
+    public List<AuditLogEntry> getLogs() {
+        return new ArrayList<>(logs);
     }
 }

@@ -2,12 +2,12 @@ package exercise4_events.refactored.event;
 
 public class SystemAlertEvent extends BaseEvent {
     private final AlertLevel level;
-    private final String message;
+    private final String content;
     private final String name;
 
     public SystemAlertEvent(AlertLevel level, String message, String name) {
         this.level = level;
-        this.message = message;
+        this.content = message;
         this.name = name;
     }
 
@@ -20,8 +20,8 @@ public class SystemAlertEvent extends BaseEvent {
         return level;
     }
 
-    public String getMessage() {
-        return message;
+    public String getContent() {
+        return content;
     }
 
     public String getName() {
